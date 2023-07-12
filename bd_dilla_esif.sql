@@ -1,22 +1,18 @@
 
-CREATE database bd_dilla_esif
-
-
-
 CREATE TABLE `clients` (
   num_client int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_client varchar(100) NOT NULL,
   prenoms_client varchar(50) NOT NULL,
   civilite_client varchar(50) NOT NULL
-) 
+) ;
 
 
 
 INSERT INTO clients (nom_client, prenoms_client, civilite_client) VALUES
-(NAREMADJI, Martine,Madame),
-(DILLA, Tresor,Monsieur),
-(DERA, Yvon,Monsieur),
-(OUEDRAOGO, Cedric,Monsieur);
+('NAREMADJI', 'Martine','Madame'),
+('DILLA', 'Tresor','Monsieur'),
+('DERA', 'Yvon','Monsieur'),
+('OUEDRAOGO', 'Cedric','Monsieur');
 
 
 
@@ -24,17 +20,16 @@ CREATE TABLE fournisseur (
   code_fournisseur int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_fournisseur varchar(100) NOT NULL,
   prenoms_fournisseur varchar(50) NOT NULL,
-  civilite_fournisseur varchar(50) NOT NULL,
-) 
-
+  civilite_fournisseur varchar(50) NOT NULL
+) ;
 
 
 
 INSERT INTO fournisseur (nom_fournisseur, prenoms_fournisseur, civilite_fournisseur) VALUES
-(BILLA, Arlette,Madame),
-(ZONGO, Bertrand,Monsieur),
-(DIGOL, Sergr,Monsieur),
-(SANKARA, Yannick,Monsieur);
+('BILLA', 'Arlette','Madame'),
+('ZONGO', 'Bertrand','Monsieur'),
+('DIGOL', 'Sergr','Monsieur'),
+('SANKARA', 'Yannick','Monsieur');
 
 
 
@@ -44,8 +39,8 @@ CREATE TABLE categorie (
 );
 
 INSERT INTO categorie (nom_categorie)
-VALUES (Electromenage),
-       (Equipement Informatique);
+VALUES ('Electromenage'),
+       ('Equipement Informatique');
 
 
 
