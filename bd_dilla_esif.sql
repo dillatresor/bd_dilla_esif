@@ -1,8 +1,7 @@
 
 CREATE database bd_dilla_esif
 
--- Structure de la table `clients`
---
+
 
 CREATE TABLE `clients` (
   num_client int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -11,8 +10,7 @@ CREATE TABLE `clients` (
   civilite_client varchar(50) NOT NULL
 ) 
 
--- Insertion des données de la table `clients`
---
+
 
 INSERT INTO clients (nom_client, prenoms_client, civilite_client) VALUES
 (NAREMADJI, Martine,Madame),
@@ -20,8 +18,7 @@ INSERT INTO clients (nom_client, prenoms_client, civilite_client) VALUES
 (DERA, Yvon,Monsieur),
 (OUEDRAOGO, Cedric,Monsieur);
 
--- Structure de la table `Fournisseur`
---
+
 
 CREATE TABLE fournisseur (
   code_fournisseur int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -31,8 +28,7 @@ CREATE TABLE fournisseur (
 ) 
 
 
--- Insertion des données de la table `Fournisseur`
---
+
 
 INSERT INTO fournisseur (nom_fournisseur, prenoms_fournisseur, civilite_fournisseur) VALUES
 (BILLA, Arlette,Madame),
@@ -53,8 +49,7 @@ VALUES (Electromenage),
 
 
 
--- Structure de la table `Articles`
---
+
 CREATE TABLE articles (
   num_article int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   designation_article varchar(100) NOT NULL,
@@ -64,9 +59,7 @@ CREATE TABLE articles (
   FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie)
 );
 
---
---  Insertion des données de la table `Articles`
---
+
 
 INSERT INTO articles (designation_article, Prix_article, Qte_article, id_categorie) VALUES
 ('CAISSON PLUS 2 ARMOIRES 2 PORTES', 250.55, 51, 1),
@@ -79,8 +72,6 @@ INSERT INTO articles (designation_article, Prix_article, Qte_article, id_categor
 
 
 
--- Structure de la table `Achat`
---
 
 CREATE TABLE achat (
   num_achat int NOT NULL PRIMARY KEY,
@@ -93,9 +84,6 @@ CREATE TABLE achat (
   FOREIGN KEY (code_fournisseur) REFERENCES fournisseur(code_fournisseur)
 );
 
---
--- Insertion des données de la table `Achat`
---
 
 INSERT INTO achat (num_achat, client_achat, date_achat, montant_Achat) VALUES
 (1, 1, 12/03/2019, 1295.95),
@@ -103,8 +91,7 @@ INSERT INTO achat (num_achat, client_achat, date_achat, montant_Achat) VALUES
 
 
 
--- Structure de la table `Achat`
---
+
 
 CREATE TABLE vente (
   num_vente int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
