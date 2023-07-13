@@ -1,110 +1,116 @@
 
-CREATE TABLE `clients` (
-  num_client int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  nom_client varchar(100) NOT NULL,
-  prenoms_client varchar(50) NOT NULL,
-  civilite_client varchar(50) NOT NULL
-) ;
+   
+CREATE TABLE
+    clients (
+        id_client INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        nom VARCHAR(50) NOT NULL,
+        prenom VARCHAR(25) NOT NULL,
+        adresse VARCHAR(25) NOT NULL,
+        pays VARCHAR(25) NOT NULL,
+        telephone INT(25) NOT NULL
+    );
+
+    
+INSERT INTO
+    clients (nom,prenom,adresse,pays,telephone)
+VALUES ('DILLA','TRESOR','Secteur 19','B.F','78562248'), 
+       ('KABORE','ABDOUL','Secteur 17','B.F','77522260'),
+       ('NDOKOBE','RODRIGUE','Secteur 19','B.F','78822648'),
+       ('CISSE','MARIAM','Secteur 1','MLI','54582246'), 
+       ('KINI','JEAN','Secteur 40','C.I','54584358'),
+       ('MAIGA','ABOUL-WAHAB','Secteur 19','FR','1054582248');
+
+
+CREATE TABLE
+    fournisseurs(
+        id_fournisseur INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        nom VARCHAR(20) NOT NULL,
+        prenom VARCHAR(25) NOT NULL,
+        adresse VARCHAR(20) NOT NULL,
+        telephone INT(25) NOT NULL,
+        email VARCHAR(50) NOT NULL
+    );
+
+    INSERT INTO
+    fournisseurs (nom,prenom,adresse,telephone,email)
+VALUES ('OUEDRAO','AZIZ','Secteur 19','54582249','aziz45@gmail.com'),
+       ('DINGO','ALAIN','Secteur 17','77522261','dingoma@gmail.com'), 
+       ('BEOROFEI','CHRIST','Secteur 92','76585240','christ@gmail.com'), 
+       ('NIKIEMA','ILA','Secteur 1','94582148','ila@gmail.com'), 
+       ('KITELA','MARIE','Secteur 22','54533249','kitela@gmail.com');
+
+
+CREATE TABLE
+    categories(
+        id_categorie INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        libelle VARCHAR(50) NOT NULL
+    );
+    INSERT INTO
+    categories (libelle)
+VALUES ('informatique'), ('electronique'), ('electro-menager');
+
+
+CREATE TABLE
+    articles (
+        id_article INT NOT NULL AUTO_INCREMENT,
+        designation VARCHAR(25) NOT NULL,
+        id_categorie INT NOT NULL,
+        marque VARCHAR(20) NOT NULL,
+        quantite INT(20) NOT NULL,
+        PRIMARY KEY (id_article),
+        FOREIGN KEY (id_categorie) REFERENCES categories (id_categorie)
+    );
+
+    INSERT INTO
+    articles(id_categorie,designation,marque,quantite)
+VALUES ('1','ordinateur','HP probook','50'),
+       ('2','télé','panasonic ecran"50"','10'), 
+       ('3', 'Fourre', 'LG', '100'), 
+       ('2', 'Tondeuse', 'Azur', '100'), 
+       ('1', 'Souris', 'samsung', '10'),
+       ('3', 'Gaz', 'Sodigaz', '100');
 
 
 
-INSERT INTO clients (nom_client, prenoms_client, civilite_client) VALUES
-('NAREMADJI', 'Martine','Madame'),
-('DILLA', 'Tresor','Monsieur'),
-('DERA', 'Yvon','Monsieur'),
-('OUEDRAOGO', 'Cedric','Monsieur');
+CREATE TABLE
+    IF NOT EXISTS achats(
+        id_achat INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        id_fournisseur INT NOT NULL,
+        id_article INT NOT NULL,
+        quantite INT(100) NOT NULL,
+        prix_unitaire INT(100) NOT NULL,
+        FOREIGN KEY (id_fournisseur) REFERENCES fournisseurs (id_fournisseur),
+        FOREIGN KEY (id_article) REFERENCES articles (id_article)
+    );
+
+    
+INSERT INTO
+    achats(id_fournisseur,id_article,quantite,prix_unitaire)
+VALUES ('3', '1', '100', '86000'), 
+       ('1', '2', '25', '5500'), 
+       ('4', '2', '100', '5300'), 
+       ('2', '4', '9', '8300'),
+       ('3', '3', '40', '3650');
 
 
 
-CREATE TABLE fournisseur (
-  code_fournisseur int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  nom_fournisseur varchar(100) NOT NULL,
-  prenoms_fournisseur varchar(50) NOT NULL,
-  civilite_fournisseur varchar(50) NOT NULL
-) ;
+CREATE TABLE
+    IF NOT EXISTS ventes(
+        id_ventes INT NOT NULL AUTO_INCREMENT,
+        id_client INT NOT NULL,
+        id_article INT NOT NULL,
+        quantite int(100) NOT NULL,
+        prix_unitaire INT(100) NOT NULL,
+        PRIMARY KEY(id_ventes),
+        FOREIGN KEY (id_client) REFERENCES clients (id_client),
+        FOREIGN KEY (id_article) REFERENCES articles (id_article)
+    );
 
 
-
-INSERT INTO fournisseur (nom_fournisseur, prenoms_fournisseur, civilite_fournisseur) VALUES
-('BILLA', 'Arlette','Madame'),
-('ZONGO', 'Bertrand','Monsieur'),
-('DIGOL', 'Sergr','Monsieur'),
-('SANKARA', 'Yannick','Monsieur');
-
-
-
-CREATE TABLE categorie (
-    id_categorie INT PRIMARY KEY AUTO_INCREMENT,
-    nom_categorie VARCHAR(100)
-);
-
-INSERT INTO categorie (nom_categorie)
-VALUES ('Electromenage'),
-       ('Equipement Informatique');
-
-
-
-
-CREATE TABLE articles (
-  num_article int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  designation_article varchar(100) NOT NULL,
-  Prix_article float NOT NULL,
-  Qte_article int(11) NOT NULL,
-  id_categorie int(12),
-  FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie)
-);
-
-
-
-INSERT INTO articles (designation_article, Prix_article, Qte_article, id_categorie) VALUES
-('CAISSON PLUS 2 ARMOIRES 2 PORTES', 250.55, 51, 1),
-('BUREAU MDF' , 325.15, 38, 1),
-('TABLE POUR ORDINATEUR', 175.25, 61, 2),
-('CLAVIER LUMINEUX', 290.15, 15, 2),
-('SOURIS HP', 445, 9, 1);
-
-
-
-
-
-
-CREATE TABLE achat (
-  num_achat int NOT NULL PRIMARY KEY,
-  client_achat int NOT NULL,
-  date_achat date NOT NULL,
-  montant_achat float NOT NULL,
-  code_article int,
-  code_fournisseur int,
-  FOREIGN KEY (code_article) REFERENCES articles(num_article),
-  FOREIGN KEY (code_fournisseur) REFERENCES fournisseur(code_fournisseur)
-);
-
-
-INSERT INTO achat (num_achat, client_achat, date_achat, montant_Achat) VALUES
-(1, 1, 12/03/2019, 1295.95),
-(2, 2, 16/03/2019, 1488.8);
-
-
-
-
-
-CREATE TABLE vente (
-  num_vente int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  client_vente varchar(100) NOT NULL,
-  date_vente varchar(10) NOT NULL,
-  montant_vente float NOT NULL,
-  num_client int,
-  code_article int,
-  FOREIGN KEY (num_client) REFERENCES clients(num_client),
-  FOREIGN KEY (code_article) REFERENCES articles(num_article)
-) ;
-
-
-INSERT INTO vente (client_vente, date_vente, montant_vente, num_client, code_article) VALUES
-('Robert', '2019-06-25', 1295.95 , 1, 2),
-('Jean', '2019-06-20', 1576.95 , 1, 1)
-;
-
-
-
-
+INSERT INTO
+    ventes(id_client,id_article,quantite,prix_unitaire)
+VALUES ('3', '1', '100', '1578'), 
+       ('1', '2', '25', '7400'), 
+       ('4', '2', '100', '1000'), 
+       ('2', '4', '9', '9400'), 
+       ('3', '3', '50', '4700');
